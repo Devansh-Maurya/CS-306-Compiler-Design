@@ -20,24 +20,19 @@ int main() {
 
     printf("You entered: %s", str);
 
-    while ((token = strsep(&str, " ;, "))) {
-        //printf("\n%s : ", token);
-
-	if(!strcmp(token, " "))
-	    continue;
+    while ((token = strsep(&str, " "))) {
+        printf("\n%s : ", token);
 
         if (isIntKeyword(token))
-            printf("\n%s : <INT_KEYW>", token);
+            printf("<INT_KEYW>");
         else if (isCharKeyword(token))
-            printf("\n%s : <CHAR_KEYW>", token);
+            printf("<CHAR_KEYW>");
         else if (isInteger(token))
-            printf("\n%s : <INT_NUM>", token);
+            printf("<INT_NUM>");
         else if (isFractionalNumber(token))
-            printf("\n%s : <FRACT_NUM>", token);
+            printf("<FRACT_NUM>");
         else if (isIdentifier(token))
-            printf("\n%s : <IDENTIFIER>", token);
-	else if (isInteger(token))
-	    printf("\n%s : <INT_NUM>", token);
+            printf("<IDENTIFIER>");
     }
 
     free(ptr);
@@ -66,11 +61,7 @@ bool isInteger(const char* token) {
     //The error is checked using the pointer passed as second parameter
 
     char *invalidTokenStartPointer;
-    int num = strtol(token, &invalidTokenStartPointer, 10);
-
-    if (num == 0) {
-		return false;
-	}
+    strtol(token, &invalidTokenStartPointer, 10);
 
     if (!strcmp(invalidTokenStartPointer, ""))
         return true;
@@ -81,11 +72,7 @@ bool isInteger(const char* token) {
 bool isFractionalNumber(const char* token) {
 
     char *invalidTokenStartPointer;
-    double num = strtod(token, &invalidTokenStartPointer);
-
-	if (num == 0) {
-		return false;
-	}
+    strtod(token, &invalidTokenStartPointer);
 
     if (!strcmp(invalidTokenStartPointer, ""))
         return true;
