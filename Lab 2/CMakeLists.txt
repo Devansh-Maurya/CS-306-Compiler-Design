@@ -3,4 +3,4 @@ project(Lab_2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Lab_2 main.c dfa_operators.c)
+add_executable(Lab_2 dfa_numbers.c dfa_operators.c combined.c)
