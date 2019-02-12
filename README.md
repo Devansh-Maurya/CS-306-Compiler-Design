@@ -1,1 +1,1 @@
-# CS-306-Compiler-Design
+# SEM 6 Lab Assignments
