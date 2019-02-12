@@ -3,4 +3,4 @@ project(heap)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(heap main.cpp create.cpp delete.cpp insert.cpp functions.h)
+add_executable(heap main.cpp create.cpp delete.cpp insert.cpp functions.h display.cpp)
