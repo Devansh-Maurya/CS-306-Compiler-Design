@@ -37,13 +37,13 @@ int main() {
         switch(choice)
         {
             case 1:
-                cout << "Enter the element to be inserted to the list : ";
+                cout << "Enter the element to be inserted to the heap : ";
                 cin >> num;
                 insert(array, num, totalElements);
                 totalElements++;
                 break;
             case 2:
-                cout << "Enter the elements to be deleted from the list: ";
+                cout << "Enter the elements to be deleted from the heap: ";
                 cin >> num;
                 deleteElement(array, num, totalElements);
                 totalElements--;
