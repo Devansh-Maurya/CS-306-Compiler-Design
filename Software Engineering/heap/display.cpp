@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void display(int* array, int n)
+void display(const int* array, int n)
 {
     int i;
     if (n == 0)
@@ -14,6 +14,6 @@ void display(int* array, int n)
         return;
     }
     for (i = 0; i < n; i++)
-        printf("%d ", array[i]);
-    printf("\n");
+        cout << array[i] << " ";
+    cout << "\n";
 }
