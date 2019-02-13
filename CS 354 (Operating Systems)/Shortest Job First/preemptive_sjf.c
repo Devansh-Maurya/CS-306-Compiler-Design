@@ -18,7 +18,7 @@ struct Process {
 
 typedef struct Process Process;
 
-void applyPreemptiveSJF(Process*, Process*, int);
+void applyPreemptiveSJF(Process*, int);
 int processIdComparator(const void*, const void*);
 void printProcessArray(const Process*, int);
 
@@ -44,7 +44,7 @@ int main() {
         processes[i].remainingBurstTime = processes[i].burstTime;
     }
 
-    applyPreemptiveSJF(processes, ganttChart, n);
+    applyPreemptiveSJF(processes, n);
     qsort(processes, n, sizeof(Process), processIdComparator);
     printProcessArray(processes, n);
 
@@ -71,11 +71,11 @@ int main() {
     return 0;
 }
 
-void applyPreemptiveSJF(Process *processes, Process *ganttChart, int n) {
+void applyPreemptiveSJF(Process *processes, int n) {
 
     int completedProcesses = 0;
     int time = 0, minimumRemainingTime = INT_MAX;
-    bool isProcessInExecution = false, processChanged = false;
+    bool isProcessInExecution = false, processChanged;
     Process *currentProcess = NULL;
 
     printf("\n\nGantt Chart:\n\n");
