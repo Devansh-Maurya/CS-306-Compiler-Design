@@ -91,7 +91,7 @@ void applyPreemptivePriorityScheduling(Process *processes, int n) {
         processChanged = false;
 
         //Among all the processes that have arrived till 'time',
-        //find processes with minimum remaining time
+        //find processes with maximum priority
         for (int i = 0; i < n; ++i) {
             if (processes[i].arrivalTime <= time &&
                 processes[i].priority > maximumPriority &&
