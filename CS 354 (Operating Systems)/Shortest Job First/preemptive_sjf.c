@@ -14,7 +14,6 @@ struct Process {
     int turnaroundTime;
     int completionTime;
     int remainingBurstTime;
-    bool isLastProcessInGroup;
 };
 
 typedef struct Process Process;
@@ -22,7 +21,6 @@ typedef struct Process Process;
 void applyPreemptiveSJF(Process*, Process*, int);
 int processIdComparator(const void*, const void*);
 void printProcessArray(const Process*, int);
-void printGanttChart(const Process*, int);
 
 int main() {
 
@@ -36,7 +34,6 @@ int main() {
 
     for (int i = 0; i < n; ++i) {
         processes[i].pId = i+1;
-        processes[i].isLastProcessInGroup = false;
 
         printf("Enter burst time for process %d: ", i+1);
         scanf("%d", &processes[i].burstTime);
@@ -152,21 +149,4 @@ void printProcessArray(const Process* processes, int n) {
                processes[i].pId, processes[i].arrivalTime, processes[i].burstTime,
                processes[i].completionTime, processes[i].turnaroundTime, processes[i].waitingTime);
     }
-}
-
-void printGanttChart(const Process* ganttChart, int n) {
-
-    printf("\n\nGantt Chart:\n");
-    if (ganttChart[0].arrivalTime > 0) {
-        printf("0 //// %d  P%d  %d", ganttChart[0].arrivalTime, ganttChart[0].pId,
-               ganttChart[0].completionTime);
-    } else {
-        printf("%d  P%d  %d", ganttChart[0].arrivalTime, ganttChart[0].pId,
-               ganttChart[0].completionTime);
-    }
-
-    for (int i = 1; i < n; ++i) {
-        printf("  P%d  %d", ganttChart[i].pId, ganttChart[i].completionTime);
-    }
-    printf("\n\n");
 }
