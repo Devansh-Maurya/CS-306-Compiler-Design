@@ -3,4 +3,4 @@ project(Priority_Scheduling C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Priority_Scheduling non_preemptive_priority_scheduling.c)
+add_executable(Priority_Scheduling preemptive_priority_scheduling.c)
