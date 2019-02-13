@@ -75,15 +75,19 @@ void applyPreemptiveSJF(Process *processes, int n) {
 
     int completedProcesses = 0;
     int time = 0, minimumRemainingTime = INT_MAX;
-    bool isProcessInExecution = false, processChanged;
-    Process *currentProcess = NULL;
+    bool isProcessInExecution = false;  //Used to check if CPU is idle
+    bool processChanged;                //Used for proper output of Gantt chart
+    Process *currentProcess = NULL;     //Current process that is being executed
 
     printf("\n\nGantt Chart:\n\n");
 
+    //Loop until all processes are completed
     while (completedProcesses < n) {
 
         processChanged = false;
 
+        //Among all the processes that have arrived till 'time',
+        //find processes with minimum remaining time
         for (int i = 0; i < n; ++i) {
             if (processes[i].arrivalTime <= time &&
                 processes[i].remainingBurstTime < minimumRemainingTime &&
@@ -92,11 +96,12 @@ void applyPreemptiveSJF(Process *processes, int n) {
                 minimumRemainingTime = processes[i].remainingBurstTime;
                 currentProcess = processes + i;
                 isProcessInExecution = true;
-                processChanged = true;
+                processChanged = true;      //A new process has started execution
             }
         }
 
         if (!isProcessInExecution) {
+            //No process is being executed, so CPU is idle
             printf("%d", time);
             printf(" //// ");
             time++;
@@ -104,12 +109,16 @@ void applyPreemptiveSJF(Process *processes, int n) {
         }
 
         if (processChanged) {
+            //Process has changed. Print the new process in Gantt chart
             printf("%d", time);
             printf(" P%d ", currentProcess->pId);
         }
 
         currentProcess->remainingBurstTime--;
+
         minimumRemainingTime = currentProcess->remainingBurstTime;
+
+        //Process has finished, so set min. time to INT_MAX
         if (minimumRemainingTime == 0)
             minimumRemainingTime = INT_MAX;
 
