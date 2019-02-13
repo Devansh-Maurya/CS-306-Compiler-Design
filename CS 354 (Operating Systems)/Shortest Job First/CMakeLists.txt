@@ -3,4 +3,4 @@ project(Shortest_Job_First C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Shortest_Job_First non_preemptive_sjf.c preemptive_sjf.c)
+add_executable(Shortest_Job_First preemptive_sjf.c)
