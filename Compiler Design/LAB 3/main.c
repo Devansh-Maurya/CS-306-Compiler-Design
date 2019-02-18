@@ -8,6 +8,11 @@ bool isDigit(char);
 bool isIdentifier(const char *, int, int);
 void printSymbolTableEntry(const char*, int, int, const char*);
 
+//struct SymbolTable {
+//    char symbol[20];
+//    long
+//};
+
 int main() {
     char str[100];
     int i = 0, j = 0;
@@ -24,12 +29,8 @@ int main() {
         while (str[i] == ' ') {
             i++;
         }
-        j = i;
 
-        if (isOperator(str[i])) {
-            printSymbolTableEntry(str, i, j, "operator");
-            continue;
-        } else {
+        if (!isOperator(str[i])) {
             for (j = i; !isOperator(str[j]) && str[j] != NULL && str[j] != ' '; ++j);
             if(isIdentifier(str, i, j-1))
                 printSymbolTableEntry(str, i, j-1, "identifier");
