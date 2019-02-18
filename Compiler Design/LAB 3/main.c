@@ -13,13 +13,18 @@ int main() {
     int i = 0, j = 0;
 
     printf("Enter an string: ");
-    scanf("%s", str);
+    scanf("%[^\n]s", str);
 
     printf("You entered: %s\n\n", str);
 
     printf("Symbol\t\t\tAddress\t\t\t\t\tType\n\n");
 
     for (i = 0; str[i] != NULL; ++i) {
+
+        while (str[i] == ' ') {
+            i++;
+        }
+        j = i;
 
         if (isOperator(str[i])) {
             printSymbolTableEntry(str, i, j, "operator");
@@ -28,7 +33,7 @@ int main() {
             for (j = i; !isOperator(str[j]) && str[j] != NULL && str[j] != ' '; ++j);
             if(isIdentifier(str, i, j-1))
                 printSymbolTableEntry(str, i, j-1, "identifier");
-            i=j;
+            i=j-1;
         }
     }
 
@@ -40,7 +45,7 @@ bool isOperator(char c) {
 }
 
 void printSymbolTableEntry(const char *ptr, int start, int end, const char *type) {
-    for (int i = start; i <= end+1; ++i) {
+    for (int i = start; i <= end; ++i) {
         printf("%c", ptr[i]);
     }
     printf("\t\t\t\t%p\t\t\t%s\n", ptr + start, type);
@@ -48,7 +53,7 @@ void printSymbolTableEntry(const char *ptr, int start, int end, const char *type
 
 bool isIdentifier(const char* token, int start, int end) {
 
-    if (isAlphabet(token[0]) || token[0] == '_') {
+    if (isAlphabet(token[start]) || token[start] == '_') {
         for (int i = start; i <= end ; ++i) {
             if (!isAlphabet(token[i]) && token[i] != '_' && !isDigit(token[i]))
                 return false;
