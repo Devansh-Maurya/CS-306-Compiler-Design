@@ -15,6 +15,11 @@ int main() {
     cout << "Enter initial number of elements to create the heap: ";
     cin >> totalElements;
 
+	if (totalElements > size) {
+		cout << "Too many initial elements!\n";
+		exit(0);
+	}
+
     int *array = new int[size];
 
     for (int i = 0; i < totalElements; ++i) {
