@@ -1,10 +1,13 @@
 CC = g++
-OBJECTS = heap.o create.o insert.o delete.o display.o
+_OBJECTS := heap.o create.o insert.o delete.o display.o
+OBJECTS := $(pathsubst %.o, src/%.o, $(_OBJECTS))
+
+all: src/%.o heap
 
 heap: $(OBJECTS)
-	$(CC) $(OBJECTS) -o heap
+	echo $(OBJECTS); $(CC) $(OBJECTS) -o heap
 
-.cpp.o: functions.h
+src/%.o: src/$@.c src/functions.h
 	$(CC) -c $*.cpp
 
 clean:
