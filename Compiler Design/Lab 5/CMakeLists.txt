@@ -3,4 +3,4 @@ project(Lab_5 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Lab_5 main.c)
+add_executable(Lab_5 main.c token.h)
