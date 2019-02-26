@@ -4,7 +4,8 @@ _OBJECTS = heap.o create.o insert.o delete.o display.o
 OBJECTS = $(patsubst %.o, $(SRC_DIR)/%.o, $(_OBJECTS))
 
 echo:
-	echo $(_OBJECTS); echo $(OBJECTS);
+	@echo $(_OBJECTS)
+	@echo $(OBJECTS)
 
 heap: $(OBJECTS)
 	$(CC) $(OBJECTS) -o heap
