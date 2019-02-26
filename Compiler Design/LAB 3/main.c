@@ -31,8 +31,6 @@ int main() {
 
     printf("You entered: %s\n\n", str);
 
-    printf("Symbol\t\t\tAddress\t\t\t\t\tType\n\n");
-
     for (i = 0; str[i] != NULL; ++i) {
 
         while (str[i] == ' ') {
@@ -75,14 +73,28 @@ int addToSymbolTable(const char *ptr, int start, int end, const char *type) {
     tempStr[end - start + 1] = '\0';
 
     for (i = 0; i <= symbolTableIndex; ++i) {
+<<<<<<< HEAD
+        if (!strcmp(symbolTable[i].symbol, tempStr)) {
+            free(tempStr);
+            return i;
+        }
+=======
         if (!strcmp(symbolTable[i].symbol, tempStr))
             return i;
+>>>>>>> 5c04b7491653d95f1ac84128df9aedaf2ae81a97
     }
 
     symbolTableIndex++;
     strcpy(symbolTable[symbolTableIndex].symbol, tempStr);
     symbolTable[symbolTableIndex].address = (void *) ptr + start;
     strcpy(symbolTable[symbolTableIndex].type, type);
+<<<<<<< HEAD
+
+    free(tempStr);
+
+    return symbolTableIndex;
+=======
+>>>>>>> 5c04b7491653d95f1ac84128df9aedaf2ae81a97
 }
 
 void printSymbolTable() {
