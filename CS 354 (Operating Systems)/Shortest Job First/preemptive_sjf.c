@@ -34,10 +34,6 @@ int main() {
     scanf("%d", &n);
 
     Process processes[10];
-    Process *fake;
-    fake = ganttChart;
-    if (fake)
-        printf("aaa");
 
     for (int i = 0; i < n; ++i) {
         processes[i].pId = i+1;
@@ -158,7 +154,7 @@ void applyPreemptiveSJF(Process *processes, int n) {
     ganttChart[0].executedTime = ganttChart[1].preemptedTime - ganttChart[0].arrivalTime;
 
     //It has been assumed that only CPU is idle initially, if.
-    //Ig CPU is idle, add an empty process at the beginning
+    //If CPU is idle, add an empty process at the beginning
     if (ganttChart[0].arrivalTime != 0) {
         for (int i = ganttChartIndex; i > 0 ; i--) {
             ganttChart[i] = ganttChart[i-1];

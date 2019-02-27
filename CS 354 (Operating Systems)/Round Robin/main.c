@@ -3,6 +3,8 @@
 #include <stdbool.h>
 
 #define MAX_QUEUE_SIZE 20
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 
 struct Process {
     int pId;
@@ -19,11 +21,10 @@ struct Process {
 typedef struct Process Process;
 
 int queuePtr = 0;
-Process *temp;
 
-void roundRobin(Process*, int);
-void enqueue(Process[20], Process*);
-Process* dequeue(Process[20]);
+void roundRobin(Process*, int, int);
+void enqueue(Process *[20], Process*);
+Process* dequeue(Process *[20]);
 int processIdComparator(const void*, const void*);
 int arrivalTimeComparator(const void*, const void*);
 void printGanttChart(const Process*, int);
@@ -31,14 +32,15 @@ void printProcessArray(const Process* processes, int n);
 
 int main() {
 
-    int n;
+    int n, timeQuantum;
 
+    printf("Enter time quantum: ");
+    scanf("%d", &timeQuantum);
 
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
-    Process *processes = malloc(sizeof(Process)*n);
-    temp = malloc(sizeof(Process)*n);
+    Process processes[10];
 
     for (int i = 0; i < n; ++i) {
         processes[i].pId = i+1;
@@ -51,16 +53,13 @@ int main() {
 
         processes[i].remainingBurstTime = processes[i].burstTime;
 
-        temp[i] = processes[i];
     }
 
     //Sort according to the arrival time to bring the earliest arriving processes at the top
     qsort((void*) processes, n, sizeof(Process), arrivalTimeComparator);
-
-    roundRobin(processes, n);
+    roundRobin(processes, n, timeQuantum);
 
     qsort((void*) processes, n, sizeof(Process), processIdComparator);
-
     printProcessArray(processes, n);
 
     //Calculate average waiting time
@@ -80,24 +79,23 @@ int main() {
 
     printf("Average turnaround time: %f\n", tat);
 
-    free(processes);
-
     return 0;
 }
 
-void roundRobin(Process *processes, int n) {
+void roundRobin(Process *processes, int n, int timeQuantum) {
 
-    Process queue[MAX_QUEUE_SIZE];
+    Process *queue[MAX_QUEUE_SIZE];
     int processTablePtr = 0;
     Process* currentProcess = &processes[0];
     int time = currentProcess->arrivalTime;
-    int timeQuantum = 3;
 
     enqueue(queue, &processes[processTablePtr++]);
 
     while (true) {
 
         currentProcess = dequeue(queue);
+        if (currentProcess == NULL)
+            break;
 
         time += timeQuantum;
 
@@ -108,16 +106,17 @@ void roundRobin(Process *processes, int n) {
                 break;
         }
 
-        if (currentProcess->burstTime < timeQuantum)
+        if (currentProcess->remainingBurstTime <= timeQuantum) {
+            time = time - (timeQuantum - currentProcess->remainingBurstTime);
             currentProcess->remainingBurstTime = 0;
+        }
         else {
-            currentProcess->remainingBurstTime = currentProcess->burstTime - timeQuantum;
+            currentProcess->remainingBurstTime = currentProcess->remainingBurstTime - timeQuantum;
             enqueue(queue, currentProcess);
         }
 
         if (currentProcess->remainingBurstTime == 0) {
-            dequeue(queue);
-            currentProcess->completionTime = time - timeQuantum;
+            currentProcess->completionTime = time;
             currentProcess->turnaroundTime = currentProcess->completionTime -
                     currentProcess->arrivalTime;
             currentProcess->waitingTime = currentProcess->turnaroundTime -
@@ -131,38 +130,45 @@ void printProcessArray(const Process* processes, int n) {
 
     printf("\nProcess\tArrival time\t\tBurst time\t\tCompletion time\t\tTurnaround time\t\tWaiting time\n");
     for (int i = 0; i < n; ++i) {
-        printf("%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\n",
+        printf("%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t\t%d\n",
                processes[i].pId, processes[i].arrivalTime, processes[i].burstTime,
                processes[i].completionTime, processes[i].turnaroundTime, processes[i].waitingTime);
     }
 }
 
-void enqueue(Process queue[MAX_QUEUE_SIZE], Process *process) {
+void enqueue(Process *queue[MAX_QUEUE_SIZE], Process *process) {
 
     int p = queuePtr;
 
-    if (queuePtr == MAX_QUEUE_SIZE-1) {
+    if (queuePtr == MAX_QUEUE_SIZE) {
         printf("\nQueue is full\n");
         exit(0);
     }
 
-    queue[queuePtr] = *process;
-    queuePtr = (queuePtr + 1)%MAX_QUEUE_SIZE;
+    queue[queuePtr] = process;
+    queuePtr = queuePtr + 1;
 }
 
-Process* dequeue(Process queue[MAX_QUEUE_SIZE]) {
+Process* dequeue(Process *queue[MAX_QUEUE_SIZE]) {
 
     int p = queuePtr;
 
-    if (queuePtr == 0) {
+    if (queuePtr < 0) {
         printf("\nQueue is empty\n");
-        exit(0);
+        return NULL;
     }
 
-    int currentPos = queuePtr;
-    queuePtr = (queuePtr - 1)%MAX_QUEUE_SIZE;
+    Process *ptr = queue[0];
 
-    return &temp[queue[queuePtr].pId-1];
+    for (int i = 0; i < queuePtr-1; ++i) {
+        queue[i] = queue[i+1];
+    }
+
+
+    queuePtr = queuePtr - 1;
+    queue[queuePtr] = NULL;
+
+    return ptr;
 }
 
 int processIdComparator(const void *p, const void *q) {
