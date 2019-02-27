@@ -21,6 +21,7 @@ struct Process {
 typedef struct Process Process;
 
 int queuePtr = 0;
+int ganttChartIndex = 0;
 
 void roundRobin(Process*, int, int);
 void enqueue(Process *[20], Process*);
@@ -62,13 +63,16 @@ int main() {
     qsort((void*) processes, n, sizeof(Process), processIdComparator);
     printProcessArray(processes, n);
 
+    printf("\nGantt Chart:\n\n");
+    printGanttChart(ganttChart, ganttChartIndex);
+
     //Calculate average waiting time
     float wt = 0;
     for (int l = 0; l < n; ++l) {
         wt += processes[l].waitingTime;
     }
     wt /= n;
-    printf("\nAverage waiting time: %f\n", wt);
+    printf("\nAverage waiting time: %g\n", wt);
 
     //Calculate average turnaround time
     float tat = 0;
@@ -77,7 +81,7 @@ int main() {
     }
     tat /= n;
 
-    printf("Average turnaround time: %f\n", tat);
+    printf("Average turnaround time: %g\n", tat);
 
     return 0;
 }
@@ -94,8 +98,20 @@ void roundRobin(Process *processes, int n, int timeQuantum) {
     while (true) {
 
         currentProcess = dequeue(queue);
+
         if (currentProcess == NULL)
             break;
+
+        ganttChart[ganttChartIndex] = *currentProcess;
+
+        if (ganttChartIndex > 0)
+            ganttChart[ganttChartIndex - 1].preemptedTime = time;
+
+        if (ganttChartIndex > 1) {
+            ganttChart[ganttChartIndex - 1].executedTime =
+                    ganttChart[ganttChartIndex - 1].preemptedTime - ganttChart[ganttChartIndex - 2].preemptedTime;
+        }
+        ganttChartIndex++;
 
         time += timeQuantum;
 
@@ -119,10 +135,29 @@ void roundRobin(Process *processes, int n, int timeQuantum) {
             currentProcess->completionTime = time;
             currentProcess->turnaroundTime = currentProcess->completionTime -
                     currentProcess->arrivalTime;
-            currentProcess->waitingTime = currentProcess->turnaroundTime -
-                                                       currentProcess->burstTime;
-
+            currentProcess->waitingTime = currentProcess->turnaroundTime - currentProcess->burstTime;
         }
+    }
+
+    ganttChart[ganttChartIndex-1].preemptedTime = time;
+    ganttChart[ganttChartIndex-1].executedTime = ganttChart[ganttChartIndex-1].preemptedTime - ganttChart[ganttChartIndex-2].preemptedTime;
+
+    ganttChart[0].executedTime = ganttChart[1].preemptedTime - ganttChart[0].arrivalTime;
+
+    //It has been assumed that only CPU is idle initially, if.
+    //If CPU is idle, add an empty process at the beginning
+    if (ganttChart[0].arrivalTime != 0) {
+        for (int i = ganttChartIndex; i > 0 ; i--) {
+            ganttChart[i] = ganttChart[i-1];
+        }
+        ganttChartIndex++;
+        Process emptyProcess;
+        emptyProcess.pId = -1;
+        emptyProcess.preemptedTime = ganttChart[1].arrivalTime;
+        emptyProcess.executedTime = ganttChart[1].arrivalTime;
+        emptyProcess.arrivalTime = 0;
+        ganttChart[0] = emptyProcess;
+        ganttChart[1].executedTime = ganttChart[1].preemptedTime - ganttChart[0].preemptedTime;
     }
 }
 
@@ -138,8 +173,6 @@ void printProcessArray(const Process* processes, int n) {
 
 void enqueue(Process *queue[MAX_QUEUE_SIZE], Process *process) {
 
-    int p = queuePtr;
-
     if (queuePtr == MAX_QUEUE_SIZE) {
         printf("\nQueue is full\n");
         exit(0);
@@ -150,8 +183,6 @@ void enqueue(Process *queue[MAX_QUEUE_SIZE], Process *process) {
 }
 
 Process* dequeue(Process *queue[MAX_QUEUE_SIZE]) {
-
-    int p = queuePtr;
 
     if (queuePtr < 0) {
         printf("\nQueue is empty\n");
@@ -190,9 +221,6 @@ int arrivalTimeComparator(const void *p, const void *q) {
 void printGanttChart(const Process* p, int n) {
 
     int i, j;
-
-    Process *fake;
-    fake = p;
 
     // print top bar
     printf(" ");
