@@ -1,0 +1,2 @@
+/home/devansh/CLionProjects/SEM_6/CS_354_Operating_Systems/Linux_Kernel_Module/hello_1.ko
+/home/devansh/CLionProjects/SEM_6/CS_354_Operating_Systems/Linux_Kernel_Module/hello_1.o

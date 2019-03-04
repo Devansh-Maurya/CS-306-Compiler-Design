@@ -3,8 +3,6 @@
 #include <stdbool.h>
 
 #define MAX_QUEUE_SIZE 20
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-noreturn"
 
 struct Process {
     int pId;
@@ -144,7 +142,6 @@ void roundRobin(Process *processes, int n, int timeQuantum) {
 
     ganttChart[0].executedTime = ganttChart[1].preemptedTime - ganttChart[0].arrivalTime;
 
-    //It has been assumed that only CPU is idle initially, if.
     //If CPU is idle, add an empty process at the beginning
     if (ganttChart[0].arrivalTime != 0) {
         for (int i = ganttChartIndex; i > 0 ; i--) {
@@ -194,7 +191,6 @@ Process* dequeue(Process *queue[MAX_QUEUE_SIZE]) {
     for (int i = 0; i < queuePtr-1; ++i) {
         queue[i] = queue[i+1];
     }
-
 
     queuePtr = queuePtr - 1;
     queue[queuePtr] = NULL;
