@@ -1,26 +1,29 @@
 class MonthWeatherData {
 
-    private float temperature;
-    private float rainfall;
+    public double temperature;
+    public double rainfall;
+    public String monthName;
     
-    public MonthWeatherData(float temperature, float rainfall) {
+    public MonthWeatherData() {}
+    
+    public MonthWeatherData(double temperature, double rainfall) {
         this.temperature = temperature;
         this.rainfall = rainfall;
     }
 
-    float getTemperature() {
-        return temperature;
-    }
+    //float getTemperature() {
+    //    return temperature;
+    //}
     
-    float getRainfall() {
-        return rainfall;
-    }
+    //float getRainfall() {
+    //    return rainfall;
+    //}
     
-    void setTemperature(float temperature) {
-        this.temperature = temperature;   
-    }
+    //void setTemperature(float temperature) {
+    //    this.temperature = temperature;   
+    //}
     
-    void setRainfall(float rainfall) {
-        this.rainfall = rainfall;
-    }
+    //void setRainfall(float rainfall) {
+    //    this.rainfall = rainfall;
+    //}
 }
