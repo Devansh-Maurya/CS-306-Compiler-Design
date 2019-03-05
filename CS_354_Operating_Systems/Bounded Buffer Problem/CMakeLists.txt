@@ -3,4 +3,4 @@ project(Bounded_Buffer_Problem C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Bounded_Buffer_Problem semaphore.c)
+add_executable(Bounded_Buffer_Problem semaphore.c monitor.c)
