@@ -81,7 +81,7 @@ void *producer(void *param) {
     while(TRUE) {
         /* sleep for a random period of time */
         int rNum = rand() / RAND_DIVISOR;
-        sleep(rNum);
+        sleep(1);
 
         /* generate a random number */
         item = rand();
@@ -111,7 +111,7 @@ void *consumer(void *param) {
     while(TRUE) {
         /* sleep for a random period of time */
         int rNum = rand() / RAND_DIVISOR;
-        sleep(rNum);
+        sleep(1);
 
         /* aquire the full lock */
         sem_wait(&full);
