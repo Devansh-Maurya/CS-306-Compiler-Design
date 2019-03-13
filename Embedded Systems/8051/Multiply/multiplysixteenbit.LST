@@ -1,0 +1,60 @@
+A51 MACRO ASSEMBLER  MULTIPLYSIXTEENBIT                                                   03/15/2019 16:47:51 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN multiplysixteenbit.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE multiplysixteenbit.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 79FF              1     MOV R1, #0FFH
+0002 7AFF              2     MOV R2, #0FFH
+0004 7BFF              3     MOV R3, #0FFH
+0006 7CFF              4     MOV R4, #0FFH
+                       5     
+0008 EB                6     MOV A,R3
+0009 8CF0              7     MOV B,R4
+000B A4                8     MUL AB
+000C F550              9     MOV 50H,A
+000E 85F051           10     MOV 51H,B
+                      11     
+0011 EB               12     MOV A,R3
+0012 8AF0             13     MOV B, R2
+0014 A4               14     MUL AB
+0015 85F052           15     MOV 52H,B
+0018 3551             16     ADDC A,51H
+001A F551             17     MOV 51H,A
+                      18     
+001C E9               19     MOV A,R1
+001D 8CF0             20     MOV B,R4
+001F A4               21     MUL AB
+0020 3551             22     ADDC A,51H
+0022 F551             23     MOV 51H,A
+0024 E5F0             24     MOV A,B
+0026 3552             25     ADDC A,52H
+0028 F552             26     MOV 52H,A
+                      27     
+002A E9               28     MOV A,R1
+002B 8AF0             29     MOV B,R2
+002D A4               30     MUL AB
+002E 3552             31     ADDC A,52H
+0030 F552             32     MOV 52H,A
+0032 E5F0             33     MOV A,B
+0034 3400             34     ADDC A,#00H
+0036 F553             35     MOV 53H,A
+                      36     END
+A51 MACRO ASSEMBLER  MULTIPLYSIXTEENBIT                                                   03/15/2019 16:47:51 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
