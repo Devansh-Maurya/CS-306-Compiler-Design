@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"moveblock.obj" 
+TO "moveblock" 
+RAMSIZE(256) 
