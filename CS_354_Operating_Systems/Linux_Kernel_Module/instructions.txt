@@ -3,3 +3,5 @@ insmod <kernel name>    : Insert kernel module
 rmmod <kernel name>     : Remove kernel module
 cat /proc/modules/      : All currently loaded kernel modules
 cat /var/log/syslog     : Kernel module logs (will print hello world and goodbye world at the end)
+dmesg                   : Print log entries
+modinfo <kernel name.ko>: Get info about kernel like Author name
