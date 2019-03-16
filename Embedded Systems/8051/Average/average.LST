@@ -1,0 +1,51 @@
+A51 MACRO ASSEMBLER  AVERAGE                                                              03/15/2019 15:33:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN average.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE average.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0300                   1     ORG 300H
+0300 060A0302          2     DB 6, 10, 3, 2, 9
+0304 09                      
+                       3     
+0000                   4     ORG 0000H
+0000 900300            5     MOV DPTR, #300H
+0003 7905              6     MOV R1, #5
+0005 A800              7     MOV R0, 0
+0007 E4                8     CLR A
+0008 AB00              9     MOV R3, 0
+                      10     
+000A                  11     LOOP:
+000A E9               12             MOV A, R1
+000B 93               13             MOVC A, @A + DPTR
+000C 2B               14             ADD A, R3
+000D FB               15             MOV R3, A
+000E D9FA             16             DJNZ R1, LOOP
+                      17     
+0010 E4               18     CLR A
+0011 93               19     MOVC A, @A + DPTR
+0012 2B               20     ADD A, R3
+0013 75F005           21     MOV B, #5
+0016 84               22     DIV AB
+0017 F580             23     MOV P0, A
+                      24     END
+A51 MACRO ASSEMBLER  AVERAGE                                                              03/15/2019 15:33:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+LOOP . . . . . . .  C ADDR   000AH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
