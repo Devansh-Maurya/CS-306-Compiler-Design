@@ -1,0 +1,52 @@
+A51 MACRO ASSEMBLER  ARRAY                                                                03/08/2019 15:51:08 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN array.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE array.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; ADDING DATA IN ARRAY
+                       2     ; IN SIMPLE TERMS SUM OF ARRAY
+                       3     ; STORING ARRAY IN ROM
+0300                   4     ORG 300H        ;
+0300 01040506          5     DB 1,4,5,6,7    ;
+0304 07                      
+                       6     ; ARRAY OF 5
+0000                   7     ORG 0000H       ;
+                       8     ; INITIALIZE DATA POINTER
+0000 900300            9     MOV DPTR, #0300H;
+                      10     ; FIRST COUNTER
+0003 7F05             11     MOV R7, #05H    ;
+                      12     ; RESETING A
+0005 7400             13     MOV A, #00H     ;
+                      14     ; COUNTER REGISTER FOR ROM ACCESS
+0007 7800             15     MOV R0, #00H    ;
+                      16     ; SUM VARIABLE
+0009 7E00             17     MOV R6,#00H     ;  
+000B                  18     LOOP:
+000B E8               19     MOV A, R0       ;
+000C 93               20     MOVC A,@A+DPTR  ;
+000D 2E               21     ADD A, R6       ;
+000E FE               22     MOV R6,A        ;
+000F 08               23     INC R0          ;
+0010 DFF9             24     DJNZ R7, LOOP   ;
+0012 8E80             25     MOV P0, R6
+                      26     END
+A51 MACRO ASSEMBLER  ARRAY                                                                03/08/2019 15:51:08 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LOOP . . . . . . .  C ADDR   000BH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

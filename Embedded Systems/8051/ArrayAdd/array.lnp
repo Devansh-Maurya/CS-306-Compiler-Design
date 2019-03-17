@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"array.obj" 
+TO "array" 
+RAMSIZE(256) 
