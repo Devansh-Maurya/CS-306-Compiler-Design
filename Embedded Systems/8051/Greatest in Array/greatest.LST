@@ -1,0 +1,71 @@
+A51 MACRO ASSEMBLER  GREATEST                                                             03/15/2019 15:00:19 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN greatest.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE greatest.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0300                   1     ORG 300H
+0300 01025936          2     DB 1, 2, 89, 54, 88;            DATA
+0304 58                      
+                       3     
+0000                   4     ORG 00H
+0000 900300            5     MOV DPTR, #300H
+                       6     
+0003 7F04              7     MOV R7, #04;                    TOTAL NUMBERS
+0005 7800              8     MOV R0, #00;                    COUNTER 1
+0007 7901              9     MOV R1, #01;                    COUNTER 2
+0009 7A00             10     MOV R2, #00
+000B E4               11     CLR A
+000C 93               12     MOVC A, @A + DPTR
+000D FB               13     MOV R3, A;                              GREATEST NUMBER
+000E E4               14     CLR A
+                      15     
+000F                  16     LOOP:
+000F E9               17             MOV A, R1
+0010 93               18             MOVC A, @A + DPTR
+0011 FA               19             MOV R2, A;                              ;FIRST NUMBER
+0012 E8               20             MOV A, R0
+0013 93               21             MOVC A, @A + DPTR;              SECOND NUMBER
+0014 FC               22             MOV R4, A
+0015 C3               23             CLR C
+0016 9A               24             SUBB A, R2                              ;FIND GREATER
+0017 400A             25             JC CHANGEGREATEST
+0019 EC               26             MOV A, R4
+001A FB               27             MOV R3, A
+001B                  28     L1:
+001B 08               29             INC R0
+001C 09               30             INC R1
+001D DFF0             31             DJNZ R7, LOOP
+                      32             
+001F 8B80             33             MOV P0, R3
+0021 8004             34             JMP LAST
+                      35     
+0023                  36     CHANGEGREATEST:                         ;GREATEST NUMBER CHANGED
+0023 EA               37             MOV A, R2
+0024 FB               38             MOV R3, A
+0025 80F4             39             JMP L1
+                      40             
+0027                  41     LAST:
+                      42             END
+A51 MACRO ASSEMBLER  GREATEST                                                             03/15/2019 15:00:19 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CHANGEGREATEST . .  C ADDR   0023H   A   
+L1 . . . . . . . .  C ADDR   001BH   A   
+LAST . . . . . . .  C ADDR   0027H   A   
+LOOP . . . . . . .  C ADDR   000FH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"average.obj" 
+TO "average" 
+RAMSIZE(256) 

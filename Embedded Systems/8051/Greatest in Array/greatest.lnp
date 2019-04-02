@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"greatest.obj" 
+TO "greatest" 
+RAMSIZE(256) 

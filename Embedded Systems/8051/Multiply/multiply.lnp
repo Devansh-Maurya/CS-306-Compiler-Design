@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"multiplysixteenbit.obj" 
+TO "multiply" 
+RAMSIZE(256) 

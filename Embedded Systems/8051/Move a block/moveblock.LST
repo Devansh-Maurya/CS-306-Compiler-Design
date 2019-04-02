@@ -1,0 +1,52 @@
+A51 MACRO ASSEMBLER  MOVEBLOCK                                                            03/15/2019 16:17:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN moveblock.OBJ
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE moveblock.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0050                   1     ORG 50H
+0050 48656C6C          2     DB "Hello World"
+0054 6F20576F                
+0058 726C64                  
+                       3     
+  000B                 4     COUNT EQU 11
+                       5     
+0000                   6     ORG 0000H
+                       7     
+0000 900050            8     MOV DPTR, #50H
+0003 780B              9     MOV R0, #COUNT
+                      10     
+0005 7430             11     MOV A, #30H
+0007 240B             12     ADD A, #COUNT
+0009 F9               13     MOV R1, A
+                      14     
+000A E4               15     CLR A
+                      16     
+                      17     
+000B                  18     LOOP:
+000B E8               19             MOV A, R0
+000C 93               20             MOVC A, @A + DPTR
+000D F550             21             MOV 50H, A
+000F 19               22             DEC R1
+0010 D8F9             23             DJNZ R0, LOOP
+                      24     
+                      25     END
+A51 MACRO ASSEMBLER  MOVEBLOCK                                                            03/15/2019 16:17:47 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+COUNT. . . . . . .  N NUMB   000BH   A   
+LOOP . . . . . . .  C ADDR   000BH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
